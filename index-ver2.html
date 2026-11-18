@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기사 프로젝트 노트</title>
+<style>
+  :root{
+    --bg:#ffffff; --text:#2b2a27; --muted:#8b8a85; --line:#ebeae6;
+    --soft:#f7f6f3; --accent:#2f7d6d; --accent-soft:#e8f3f0; --hover:#f1f0ec;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#191919; --text:#ebebe8; --muted:#8f8f8b; --line:#2f2f2f;
+      --soft:#222222; --accent:#5bbfa8; --accent-soft:#1d2e2a; --hover:#262626;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:16px; line-height:1.7;
+  }
+  .cover{
+    height:140px;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(91,191,168,.55), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(120,150,230,.45), transparent 55%),
+      linear-gradient(120deg,#cfe8e1,#dbe4f7);
+  }
+  @media (prefers-color-scheme: dark){
+    .cover{ background:
+      radial-gradient(circle at 20% 30%, rgba(91,191,168,.35), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(120,150,230,.30), transparent 55%),
+      linear-gradient(120deg,#1b2a27,#1d2336); }
+  }
+  main{max-width:720px; margin:0 auto; padding:0 22px 90px}
+  .icon{
+    width:72px; height:72px; margin-top:-36px; border-radius:16px;
+    background:var(--bg); border:1px solid var(--line);
+    display:grid; place-content:center; font-size:38px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+  }
+  h1{font-size:2.1rem; line-height:1.3; margin:16px 0 4px; letter-spacing:-.02em}
+  .sub{color:var(--muted); font-size:.88rem}
+
+  .callout{
+    display:flex; gap:12px; align-items:center; margin-top:26px;
+    background:var(--accent-soft); border-radius:10px; padding:12px 14px;
+  }
+  .callout .em{font-size:1.4rem; flex:none}
+  .callout input{font-weight:600; font-size:1.05rem}
+
+  .props{margin-top:22px; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .prop{display:flex; align-items:center; gap:8px; padding:6px 0}
+  .prop + .prop{border-top:1px solid var(--line)}
+  .prop .k{width:64px; flex:none; color:var(--muted); font-size:.9rem; padding-left:4px}
+  .prop .v{flex:1; min-width:0}
+
+  h2{font-size:1.15rem; margin:34px 0 10px; letter-spacing:-.01em}
+  h2 small{color:var(--muted); font-weight:400; font-size:.8rem; margin-left:6px}
+
+  input[type=text]{
+    width:100%; font:inherit; color:inherit; background:transparent;
+    border:1px solid transparent; border-radius:6px; padding:7px 9px; outline:none;
+    transition:background .15s;
+  }
+  input[type=text]:hover{background:var(--hover)}
+  input[type=text]:focus{background:var(--soft); border-color:var(--line)}
+  ::placeholder{color:var(--muted); opacity:.7}
+
+  .tag{
+    display:inline-block; margin-left:9px; padding:2px 12px; border-radius:6px; font-size:.92rem;
+    background:#fde7d3; color:#9a4a0c; font-weight:600;
+  }
+  @media (prefers-color-scheme: dark){ .tag{background:#3a2a1c; color:#f0b27a} }
+
+  ul{list-style:none; margin:0; padding:0}
+  .todo{display:flex; align-items:center; gap:4px}
+  .todo input[type=checkbox]{
+    -webkit-appearance:none; appearance:none; flex:none; width:22px; height:22px;
+    margin:0 4px 0 6px; border:1.8px solid var(--muted); border-radius:6px; background:transparent;
+    cursor:pointer; display:grid; place-content:center; transition:.15s;
+  }
+  .todo input[type=checkbox]::after{
+    content:""; width:10px; height:6px; border-left:2.4px solid #fff; border-bottom:2.4px solid #fff;
+    transform:rotate(-45deg) scale(0); margin-top:-2px; transition:.12s;
+  }
+  .todo input[type=checkbox]:checked{background:var(--accent); border-color:var(--accent)}
+  .todo input[type=checkbox]:checked::after{transform:rotate(-45deg) scale(1)}
+  .todo.done input[type=text]{color:var(--muted); text-decoration:line-through}
+
+  .timeline{position:relative; margin-left:6px; padding-left:20px; border-left:2px solid var(--line)}
+  .log{position:relative; padding-bottom:14px}
+  .log::before{
+    content:""; position:absolute; left:-27px; top:9px; width:10px; height:10px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 0 4px var(--bg);
+  }
+  .date{font-weight:700; font-size:.92rem; color:var(--accent); padding-left:9px}
+
+  button{
+    margin-top:4px; font:inherit; font-size:.9rem; color:var(--muted); background:transparent;
+    border:1px dashed var(--line); border-radius:8px; padding:8px 14px; cursor:pointer;
+  }
+  button:hover{background:var(--hover); color:var(--text)}
+
+  @media (max-width:480px){
+    .cover{height:110px}
+    main{padding:0 16px 70px}
+    h1{font-size:1.65rem}
+    .prop .k{width:52px}
+  }
+</style>
+</head>
+<body>
+<div class="cover"></div>
+<main>
+  <div class="icon">📰</div>
+  <h1>기사 프로젝트 노트</h1>
+  <div class="sub">칸을 눌러 바로 쓰면 이 기기에 자동 저장돼요.</div>
+
+  <div class="callout">
+    <span class="em">💡</span>
+    <input type="text" data-k="brief" value="브리프 한 줄" placeholder="프로젝트를 한 줄로" aria-label="프로젝트 한 줄">
+  </div>
+
+  <div class="props">
+    <div class="prop">
+      <span class="k">역할</span>
+      <div class="v"><input type="text" data-k="role" placeholder="역할을 적어 주세요" aria-label="역할"></div>
+    </div>
+    <div class="prop">
+      <span class="k">주제</span>
+      <div class="v"><span class="tag">경제</span></div>
+    </div>
+  </div>
+
+  <h2>할 일 체크리스트</h2>
+  <ul id="todos"></ul>
+
+  <h2>날짜별 기록</h2>
+  <div class="timeline" id="logs"></div>
+  <button id="addLog" type="button">+ 다음 날짜 추가</button>
+</main>
+
+<script>
+(function(){
+  var KEY = 'article-project-note-v1';
+  var data = {};
+  try { data = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ data = {}; }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(data)); } catch(e){} }
+
+  document.querySelectorAll('input[data-k]').forEach(function(el){
+    var k = el.getAttribute('data-k');
+    if (data[k] !== undefined) el.value = data[k];
+    el.addEventListener('input', function(){ data[k] = el.value; save(); });
+  });
+
+  data.todos = data.todos || [];
+  var ul = document.getElementById('todos');
+  for (var i = 0; i < 5; i++) (function(i){
+    var t = data.todos[i] || (data.todos[i] = {done:false, text:''});
+    var li = document.createElement('li'); li.className = 'todo' + (t.done ? ' done' : '');
+    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = t.done;
+    cb.setAttribute('aria-label', '할 일 ' + (i+1) + ' 완료');
+    var tx = document.createElement('input'); tx.type = 'text'; tx.value = t.text; tx.placeholder = '할 일 ' + (i+1);
+    cb.addEventListener('change', function(){ t.done = cb.checked; li.classList.toggle('done', cb.checked); save(); });
+    tx.addEventListener('input', function(){ t.text = tx.value; save(); });
+    li.appendChild(cb); li.appendChild(tx); ul.appendChild(li);
+  })(i);
+
+  data.logs = data.logs || [{date:'11/18', text:''}];
+  var wrap = document.getElementById('logs');
+  function addLogEl(entry){
+    var box = document.createElement('div'); box.className = 'log';
+    var d = document.createElement('div'); d.className = 'date'; d.textContent = entry.date;
+    var tx = document.createElement('input'); tx.type = 'text'; tx.value = entry.text; tx.placeholder = '오늘 한 줄';
+    tx.addEventListener('input', function(){ entry.text = tx.value; save(); });
+    box.appendChild(d); box.appendChild(tx); wrap.appendChild(box);
+  }
+  data.logs.forEach(addLogEl);
+
+  document.getElementById('addLog').addEventListener('click', function(){
+    var last = data.logs[data.logs.length-1].date.split('/');
+    var dt = new Date(2026, parseInt(last[0],10)-1, parseInt(last[1],10)+1);
+    var entry = {date:(dt.getMonth()+1)+'/'+dt.getDate(), text:''};
+    data.logs.push(entry); addLogEl(entry); save();
+  });
+})();
+</script>
+</body>
+</html>
